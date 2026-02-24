@@ -8,10 +8,10 @@
     ansible.builtin.dnf:
       name: "*"
       state: latest
+    notify: Reboot Servers
+
+  handlers:
 
   - name: Reboot servers
     ansible.builtin.reboot:
-
-
-
 
