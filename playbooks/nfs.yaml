@@ -1,0 +1,40 @@
+---
+- hosts: fileserver
+  become: true
+
+  tasks:
+
+  - name: Instalar NFS
+    ansible.builtin.dnf:
+      name: "nfs-utils"
+      state: present
+      
+  - name: Crear Carpeta Compartida
+    ansible.builtin.file:
+      path: /srv/nfs/shared
+      state: directory
+      mode: "0777"
+      owner: nobody
+      
+  - name: Configurar Exports
+    ansible.builtin.lineinfile:
+      path: /etc/exports
+      line: "srv/nfs/shared 192.168.10.0/24(rw)"
+      state: present
+
+  - name: Levantar Servicio
+    ansible.builtin.systemd_service:
+      name: nfs-utils
+      state: started
+
+  - name: Abrir puerto
+    ansible.posix.firewalld:
+      service: nfs
+      permanent: true
+      immediate: true
+      state: enabled
+
+  handlers:
+
+     
+
