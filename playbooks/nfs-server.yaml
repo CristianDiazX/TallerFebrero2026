@@ -19,12 +19,12 @@
   - name: Configurar Exports
     ansible.builtin.lineinfile:
       path: /etc/exports
-      line: "srv/nfs/shared 192.168.10.0/24(rw)"
+      line: "/srv/nfs/shared 192.168.10.0/24(rw)"
       state: present
 
   - name: Levantar Servicio
     ansible.builtin.systemd_service:
-      name: nfs-utils
+      name: nfs-server
       state: started
 
   - name: Abrir puerto
@@ -33,8 +33,13 @@
       permanent: true
       immediate: true
       state: enabled
+      
+  - name: Crear Archivo
+    ansible.builtin.lineinfile:
+      path: /srv/nfs/shared/prueba.yml
+      line: Prueba creacion archivo en nfs
+      create: true
 
-  handlers:
 
      
 

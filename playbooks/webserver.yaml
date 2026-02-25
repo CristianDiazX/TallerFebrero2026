@@ -35,3 +35,16 @@
         name: shared-http
         enabled: yes
         state: started
+
+    - name: Abrir puerto
+      community.general.ufw:
+        rule: allow
+        port: '8080'
+        proto: tcp
+      notify: reload ufw
+      
+      
+  handlers:
+    - name: reload ufw
+      community.general.ufw:
+        state: reloaded
