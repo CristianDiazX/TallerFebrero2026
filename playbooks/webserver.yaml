@@ -1,0 +1,37 @@
+- name: Configurar webserver Python con systemd
+  hosts: ubuntu
+  become: yes
+
+  tasks:
+
+    - name: Crear unit file shared-http.service
+      copy:
+        dest: /etc/systemd/system/shared-http.service
+        content: |
+          [Unit]
+          Description=Python HTTP Server serving /mnt/shared
+          After=network.target autofs.service
+          Requires=network.target
+
+          [Service]
+          Type=simple
+          User=nobody
+          Group=nogroup
+          WorkingDirectory=/mnt/shared
+          ExecStart=/usr/bin/python3 -m http.server 8080 --directory /mnt/shared
+          Restart=on-failure
+          RestartSec=5
+
+          [Install]
+          WantedBy=multi-user.target
+        mode: '0644'
+
+    - name: Recargar systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: Habilitar y arrancar servicio
+      systemd:
+        name: shared-http
+        enabled: yes
+        state: started
