@@ -18,9 +18,37 @@
       update_cache: true
     notify: Reboot Servers
     when: ansible_os_family == "Debian"  
+    
+  - name: Cambiar sshd_config Centos
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/sshd_config
+      insertafter: "#PermitRootLogin prohibit-password"
+      line: PermitRootLogin no
+    notify: Reboot Service Centos
+    when: ansible_os_family == "RedHat"
+    
+  - name: Cambiar sshd_config Ubuntu
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/sshd_config
+      insertafter: "#PermitRootLogin prohibit-password"
+      line: PermitRootLogin no
+    notify: Reboot Service Ubuntu
+    when: ansible_os_family == "Debian"
 
   handlers:
 
   - name: Reboot Servers
     ansible.builtin.reboot:
+    
+  - name: Reboot Service Centos
+    ansible.builtin.service:
+      name: sshd
+      state: reloaded
+
+
+  - name: Reboot Service Ubuntu
+    ansible.builtin.service:
+      name: ssh
+      state: reloaded
+     
 

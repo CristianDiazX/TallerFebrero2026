@@ -1,0 +1,14 @@
+  ---
+- hosts: ubuntu
+  become: true
+
+  tasks:
+  - name: Install apache
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: true
+    loop:
+      - apache2
+      - libapache2-mod-wsgi-py3
+
