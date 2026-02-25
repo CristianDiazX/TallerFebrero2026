@@ -1,11 +1,11 @@
 - name: Importar hardening
-  import_playbook: hardening.yaml
+  import_playbook: ./playbooks/hardening.yaml
 
 - name: Importar cliente NFS
-  import_playbook: nfs-client.yaml
+  import_playbook: ./playbooks/nfs-client.yaml
 
 - name: Importar servidor NFS
-  import_playbook: nfs-server.yaml
+  import_playbook: ./playbooks/nfs-server.yaml
 
 - name: Importar servidor web
-  import_playbook: webserver.yaml
+  import_playbook: ./playbooks/webserver.yaml
