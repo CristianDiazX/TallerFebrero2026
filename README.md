@@ -30,6 +30,6 @@
 
 ###
 
-<img align="left" height="200" src="https://i.imgflip.com/65efzo.gif"  />
+<img align="left" height="200" src="https://github.com/CristianDiazX/TallerFebrero2026/blob/main/Imagen.png"  />
 
 ###
